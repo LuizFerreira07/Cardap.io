@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Baixa a versão estável do Flutter
-git clone https://github.com/flutter/flutter.git -b stable
+# Baixa a versão estável do Flutter (download leve e rápido)
+git clone https://github.com/flutter/flutter.git -b stable --depth 1
 
-# Adiciona o Flutter ao PATH do Vercel
-export PATH="$PATH:`pwd`/flutter/bin"
+# Adiciona o Flutter ao PATH
+export PATH="$PATH:$PWD/flutter/bin"
 
-# Habilita o suporte web e compila o projeto
+# Configura e compila para Web
 flutter config --enable-web
 flutter pub get
 flutter build web --release
