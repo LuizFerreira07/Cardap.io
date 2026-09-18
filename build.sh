@@ -1,12 +1,19 @@
 #!/bin/bash
 
-# Baixa a versão estável do Flutter (download leve e rápido)
-git clone https://github.com/flutter/flutter.git -b stable --depth 1
+# Evita bloqueios interativos em ambientes CI/CD
+export BOT=true
+
+# Clona o Flutter para fora do diretório do projeto (/tmp)
+git clone https://github.com/flutter/flutter.git -b stable --depth 1 /tmp/flutter
 
 # Adiciona o Flutter ao PATH
-export PATH="$PATH:$PWD/flutter/bin"
+export PATH="$PATH:/tmp/flutter/bin"
 
-# Configura e compila para Web
+# Define o diretório do Flutter como seguro no Git
+git config --global --add safe.directory /tmp/flutter
+
+# Configura e executa a compilação Web
+flutter config --no-analytics
 flutter config --enable-web
 flutter pub get
 flutter build web --release
